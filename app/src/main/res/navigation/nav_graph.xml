@@ -17,5 +17,15 @@
         android:id="@+id/q1Fragment"
         android:name="com.example.quickquiz.Q1Fragment"
         android:label="fragment_q1"
-        tools:layout="@layout/fragment_q1" />
+        tools:layout="@layout/fragment_q1" >
+        <action
+            android:id="@+id/action_q1Fragment_to_q2Fragment"
+            app:destination="@id/q2Fragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/q2Fragment"
+        android:name="com.example.quickquiz.Q2Fragment"
+        android:label="Q2Fragment" />
 </navigation>

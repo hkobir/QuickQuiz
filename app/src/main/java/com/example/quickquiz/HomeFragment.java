@@ -82,32 +82,34 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //pass the argument of title during navigate
-                navController.navigate(R.id.action_homeFragment_to_q1Fragment);
+                Bundle bundle = new Bundle();
+                bundle.putString("qTitle",getTitle(categoryValue));
+                navController.navigate(R.id.action_homeFragment_to_q1Fragment,bundle);
             }
         });
 
         binding.option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedRsource(binding.option1);
+                selectedResource(binding.option1);
 
             }
         });
         binding.option2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedRsource(binding.option2);
+                selectedResource(binding.option2);
             }
         });
         binding.option3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedRsource(binding.option3);
+                selectedResource(binding.option3);
             }
         });
     }
 
-    private void selectedRsource(TextView option) {
+    private void selectedResource(TextView option) {
         option.setBackgroundResource(R.drawable.active_category_back);
         option.setTextColor(Color.WHITE);
 
