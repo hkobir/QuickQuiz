@@ -5,4 +5,5 @@
     <string name="q1">What is the best naming convention below for
         a class name in java?</string>
     <string name="q2">Which keyword should be use to inherit superclass?</string>
+    <string name="q3">By which we can initialize list of data?</string>
 </resources>

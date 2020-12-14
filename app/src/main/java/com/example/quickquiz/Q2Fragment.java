@@ -1,12 +1,23 @@
 package com.example.quickquiz;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.example.quickquiz.databinding.FragmentQ2Binding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +25,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class Q2Fragment extends Fragment {
+    private FragmentQ2Binding binding;
+    private Context context;
+    private int selectedOption = 1;
+    private CountDownTimer countDownTimer;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +74,124 @@ public class Q2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_q2, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_q2, container, false);
+        context = container.getContext();
+        return  binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        final NavController navController = Navigation.findNavController(view);
+
+        binding.titleTV.setText(Common.questionTitle);
+
+        Common.currentQuestion++;
+        //countdown time
+        countDownTimer = new CountDownTimer(30000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                binding.timeRemainTV.setText("remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                if (selectedOption == 3) {
+                    Common.score++;
+                }
+                navController.navigate(R.id.action_q2Fragment_to_q3Fragment);
+            }
+        }.start();
+
+
+        binding.runningQuestionNoTV.setText("Question: " + Common.currentQuestion + "/" + Common.totalQuestion);
+        binding.submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selectedOption == 3) {
+                    Common.score++;
+                }
+                countDownTimer.cancel();
+                navController.navigate(R.id.action_q2Fragment_to_q3Fragment);
+                Toast.makeText(context, "Selected opt: " + selectedOption, Toast.LENGTH_SHORT).show();
+            }
+        });
+        binding.tick1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedResource(binding.tick1);
+            }
+        });
+        binding.tick2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedResource(binding.tick2);
+            }
+        });
+        binding.tick3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedResource(binding.tick3);
+            }
+        });
+        binding.tick4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedResource(binding.tick4);
+            }
+        });
+
+    }
+
+    private void selectedResource(View tick) {
+        tick.setBackgroundResource(R.drawable.option_back_active);
+        if (tick == binding.tick1) {
+            selectedOption = 1;
+            binding.opt1TV.setTextColor(Color.WHITE);
+
+            binding.tick2.setBackgroundResource(R.drawable.option_back);
+            binding.opt2TV.setTextColor(Color.BLACK);
+
+            binding.tick3.setBackgroundResource(R.drawable.option_back);
+            binding.opt3TV.setTextColor(Color.BLACK);
+
+            binding.tick4.setBackgroundResource(R.drawable.option_back);
+            binding.opt4TV.setTextColor(Color.BLACK);
+        } else if (tick == binding.tick2) {
+            selectedOption = 2;
+            binding.opt2TV.setTextColor(Color.WHITE);
+
+            binding.tick1.setBackgroundResource(R.drawable.option_back);
+            binding.opt1TV.setTextColor(Color.BLACK);
+
+            binding.tick3.setBackgroundResource(R.drawable.option_back);
+            binding.opt3TV.setTextColor(Color.BLACK);
+
+            binding.tick4.setBackgroundResource(R.drawable.option_back);
+            binding.opt4TV.setTextColor(Color.BLACK);
+        } else if (tick == binding.tick3) {
+            selectedOption = 3;
+            binding.opt3TV.setTextColor(Color.WHITE);
+
+            binding.tick1.setBackgroundResource(R.drawable.option_back);
+            binding.opt1TV.setTextColor(Color.BLACK);
+
+            binding.tick2.setBackgroundResource(R.drawable.option_back);
+            binding.opt2TV.setTextColor(Color.BLACK);
+
+            binding.tick4.setBackgroundResource(R.drawable.option_back);
+            binding.opt4TV.setTextColor(Color.BLACK);
+        } else {
+            selectedOption = 4;
+            binding.opt4TV.setTextColor(Color.WHITE);
+
+            binding.tick1.setBackgroundResource(R.drawable.option_back);
+            binding.opt1TV.setTextColor(Color.BLACK);
+
+            binding.tick2.setBackgroundResource(R.drawable.option_back);
+            binding.opt2TV.setTextColor(Color.BLACK);
+
+            binding.tick3.setBackgroundResource(R.drawable.option_back);
+            binding.opt3TV.setTextColor(Color.BLACK);
+        }
     }
 }

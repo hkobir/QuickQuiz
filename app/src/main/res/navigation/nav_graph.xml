@@ -11,7 +11,8 @@
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_q1Fragment"
-            app:destination="@id/q1Fragment" />
+            app:destination="@id/q1Fragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/q1Fragment"
@@ -21,11 +22,33 @@
         <action
             android:id="@+id/action_q1Fragment_to_q2Fragment"
             app:destination="@id/q2Fragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/q2Fragment"
         android:name="com.example.quickquiz.Q2Fragment"
-        android:label="Q2Fragment" />
+        android:label="Q2Fragment" >
+        <action
+            android:id="@+id/action_q2Fragment_to_q3Fragment"
+            app:destination="@id/q3Fragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/q3Fragment"
+        android:name="com.example.quickquiz.Q3Fragment"
+        android:label="Q3Fragment" >
+        <action
+            android:id="@+id/action_q3Fragment_to_resultFragment"
+            app:destination="@id/resultFragment"
+            app:popUpTo="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.example.quickquiz.ResultFragment"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_resultFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

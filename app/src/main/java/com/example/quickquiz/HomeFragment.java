@@ -81,10 +81,9 @@ public class HomeFragment extends Fragment {
         binding.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //pass the argument of title during navigate
-                Bundle bundle = new Bundle();
-                bundle.putString("qTitle",getTitle(categoryValue));
-                navController.navigate(R.id.action_homeFragment_to_q1Fragment,bundle);
+                //store to static class
+                Common.questionTitle = getTitle(categoryValue);
+                navController.navigate(R.id.action_homeFragment_to_q1Fragment);
             }
         });
 

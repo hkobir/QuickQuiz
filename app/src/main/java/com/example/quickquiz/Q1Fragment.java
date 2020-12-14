@@ -27,6 +27,7 @@ import com.example.quickquiz.databinding.FragmentQ1Binding;
 public class Q1Fragment extends Fragment {
     private FragmentQ1Binding binding;
     private int selectedOption = 1;
+    private CountDownTimer countDownTimer;
     private Context context;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,27 +82,36 @@ public class Q1Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final NavController navController = Navigation.findNavController(view);
-        if (getArguments() != null) {
-            binding.titleTV.setText(getArguments().getString("qTitle"));
-        }
 
+        binding.titleTV.setText(Common.questionTitle);
+
+        Common.currentQuestion++;
         //countdown time
-        new CountDownTimer(30000, 1000) {
+        countDownTimer = new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 binding.timeRemainTV.setText("remaining: " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
+                if (selectedOption == 2) {
+                    Common.score++;
+                }
                 navController.navigate(R.id.action_q1Fragment_to_q2Fragment);
             }
         }.start();
 
 
+        binding.runningQuestionNoTV.setText("Question: " + Common.currentQuestion + "/" + Common.totalQuestion);
         binding.submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Selected opt: "+selectedOption, Toast.LENGTH_SHORT).show();
+                if (selectedOption == 2) {
+                    Common.score++;
+                }
+                countDownTimer.cancel();
+                navController.navigate(R.id.action_q1Fragment_to_q2Fragment);
+                Toast.makeText(context, "Selected opt: " + selectedOption, Toast.LENGTH_SHORT).show();
             }
         });
         binding.tick1.setOnClickListener(new View.OnClickListener() {
